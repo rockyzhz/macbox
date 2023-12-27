@@ -12,6 +12,7 @@
 \tcbuselibrary{skins}
 \tcbuselibrary{listings}
 \tcbuselibrary{hooks}
+\tcbuselibrary{breakable}
 \if@macbox@minted
     \tcbuselibrary{minted}
 \fi
@@ -36,16 +37,25 @@
 
 \ProvideTColorBox{macwindow1}{ !O{} }
 {
-enhanced jigsaw,
+skin=enhancedfirst,
 boxrule=0pt,
 rounded corners,
 frame code={
         \clip[rounded corners=1mm] (frame.south west) rectangle (frame.north east);
-        \shade[top color=wt1,bottom color=wt2] (title.south west) rectangle (title.north east);
+        \shade[top color=wt1,bottom color=wt2](title.south west) [rounded corners=1mm] -- (title.north west) --
+        (title.north east) [sharp corners] -- (title.south east) -- cycle;
         \fill[circ1] ([xshift=  2em]title.west) circle [radius=1ex];
         \fill[circ2] ([xshift=3.5em]title.west) circle [radius=1ex];
         \fill[circ3] ([xshift=  5em]title.west) circle [radius=1ex];
     },
+overlay first={
+        \shade[top color=wt1,bottom color=wt2](title.south west) [rounded corners=1mm] -- (title.north west) --
+        (title.north east) [sharp corners] -- (title.south east) -- cycle;
+        \fill[circ1] ([xshift=  2em]title.west) circle [radius=1ex];
+        \fill[circ2] ([xshift=3.5em]title.west) circle [radius=1ex];
+        \fill[circ3] ([xshift=  5em]title.west) circle [radius=1ex];
+    },
+frame code pre={\clip[rounded corners=1mm] (frame.south west) rectangle (frame.north east);},
 before title={\textcolor{icon}{\faHome}},
 halign title=flush center,
 fonttitle=\sffamily\zihao{-5},

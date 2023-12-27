@@ -26,13 +26,13 @@
         \usepackage{zhlipsum}
         \begin{document}
         \begin{macwindow2}[title={《祝福》（选段）——鲁迅【著】}]
-            \zhlipsum[18][name=zhufu]
+            \zhlipsum[1][name=zhufu]
         \end{macwindow2}
         \end{document}
     \end{maclisting1}
     那么就会得到下面这样的文本框：
     \begin{macwindow2}[title={《祝福》（选段）——鲁迅【著】}]
-        \zhlipsum[18][name=zhufu]
+        \zhlipsum[1][name=zhufu]
     \end{macwindow2}
     第二个示例：
     \begin{maclisting1}[title={第二个示例},listing side text]
@@ -88,7 +88,7 @@
             coltext = black,
             colback = wt3,
         ]
-        \zhlipsum[1][name=zhufu]
+        \zhlipsum[1-2][name=zhufu]
     \end{tcolorbox}
 \end{maclisting1}
 
@@ -112,7 +112,7 @@
             coltext = white,
             colback = blk3,
         ]
-        \zhlipsum[2][name=zhufu]
+        \zhlipsum[3-9][name=zhufu]
     \end{tcolorbox}
 \end{maclisting1}
 
@@ -261,5 +261,10 @@
     \folder{\faVideo}{Record Screen}
     \folder{\faCamera}{Screenshots}
     \folder{\faClock}{Time}
+\end{macwindow1}
+
+\section{可分页 (breakable) 的盒子}
+\begin{macwindow1}[breakable,title={《祝福》（选段）——鲁迅【著】}]
+    \zhlipsum[1-20][name=zhufu]
 \end{macwindow1}
 \end{document}
