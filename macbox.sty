@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{macbox}[2023-12-21 v0.1 Provided Some Mac-style colorbox]
+\ProvidesPackage{macbox}[2023-12-28 v0.3 Provided Some Mac-style colorbox]
 \DeclareKeys
 {
     minted  .if     =   {@macbox@minted},
@@ -33,159 +33,126 @@
 \ProvideDocumentCommand\folder{ m m } % 生成一个文件夹的图标
 {\parbox[c]{2.75cm}{\centering\resizebox{1.5cm}{1.5cm}{\color{folder}\faFolder}\\[-1cm]\scalebox{1.3}{\color{center}#1}\\[4mm]{\sffamily #2}}}
 
-\tcbset{rounded corners}
+\tcbset{
+    macboxwhitestyle/.style={
+            enhanced,
+            boxrule=0pt,
+            rounded corners,
+            frame code={
+                    \clip[rounded corners=1mm] (frame.south west) rectangle (frame.north east);
+                    \shade[top color=wt1,bottom color=wt2](title.south west) [rounded corners=1mm] -- (title.north west) --
+                    (title.north east) [sharp corners] -- (title.south east) -- cycle;
+                    \fill[circ1] ([xshift=  2em]title.west) circle [radius=1ex];
+                    \fill[circ2] ([xshift=3.5em]title.west) circle [radius=1ex];
+                    \fill[circ3] ([xshift=  5em]title.west) circle [radius=1ex];
+                },
+            overlay first={
+                    \shade[top color=wt1,bottom color=wt2](title.south west) [rounded corners=1mm] -- (title.north west) --
+                    (title.north east) [sharp corners] -- (title.south east) -- cycle;
+                    \fill[circ1] ([xshift=  2em]title.west) circle [radius=1ex];
+                    \fill[circ2] ([xshift=3.5em]title.west) circle [radius=1ex];
+                    \fill[circ3] ([xshift=  5em]title.west) circle [radius=1ex];
+                },
+            underlay last={
+                    \fill[wt3] (frame.north west) -- (frame.north east) [rounded corners=1mm] --
+                    (frame.south east) -- (frame.south west) [sharp corners] -- cycle;
+                },
+            before title={\textcolor{icon}{\faHome}},
+            halign title=flush center,
+            fonttitle=\sffamily\zihao{-5},
+            before upper={\setlength{\parindent}{2em}},
+            coltitle = black,
+            coltext = black,
+            colback = wt3,
+        },
+    macboxblackstyle/.style={
+            enhanced,
+            boxrule=0pt,
+            rounded corners,
+            frame code={
+                    \clip[rounded corners=1mm] (frame.south west) rectangle (frame.north east);
+                    \shade[top color=blk1,bottom color=blk2](title.south west) [rounded corners=1mm] -- (title.north west) --
+                    (title.north east) [sharp corners] -- (title.south east) -- cycle;
+                    \fill[circ1] ([xshift=  2em]title.west) circle [radius=1ex];
+                    \fill[circ2] ([xshift=3.5em]title.west) circle [radius=1ex];
+                    \fill[circ3] ([xshift=  5em]title.west) circle [radius=1ex];
+                },
+            overlay first={
+                    \shade[top color=blk1,bottom color=blk2](title.south west) [rounded corners=1mm] -- (title.north west) --
+                    (title.north east) [sharp corners] -- (title.south east) -- cycle;
+                    \fill[circ1] ([xshift=  2em]title.west) circle [radius=1ex];
+                    \fill[circ2] ([xshift=3.5em]title.west) circle [radius=1ex];
+                    \fill[circ3] ([xshift=  5em]title.west) circle [radius=1ex];
+                },
+            underlay last={
+                    \fill[blk3] (frame.north west) -- (frame.north east) [rounded corners=1mm] --
+                    (frame.south east) -- (frame.south west) [sharp corners] -- cycle;
+                },
+            before title={\textcolor{icon}{\faHome}},
+            halign title=flush center,
+            fonttitle=\sffamily\zihao{-5},
+            before upper={\setlength{\parindent}{2em}},
+            coltitle = white,
+            coltext = white,
+            colback = blk3,
+        },
+    listingstyle/.style={
+            listing only,
+            listing engine=listings,
+            listing options={style=tcblatex,language=TeX,},
+        },
+    mintedstyle/.style={
+            listing only,
+            listing engine=minted,
+            minted language=latex,
+            minted options={fontsize=\small,breaklines,autogobble,linenos,numbersep=3mm},
+        }
+}
 
 \ProvideTColorBox{macwindow1}{ !O{} }
 {
-skin=enhancedfirst,
-boxrule=0pt,
-rounded corners,
-frame code={
-        \clip[rounded corners=1mm] (frame.south west) rectangle (frame.north east);
-        \shade[top color=wt1,bottom color=wt2](title.south west) [rounded corners=1mm] -- (title.north west) --
-        (title.north east) [sharp corners] -- (title.south east) -- cycle;
-        \fill[circ1] ([xshift=  2em]title.west) circle [radius=1ex];
-        \fill[circ2] ([xshift=3.5em]title.west) circle [radius=1ex];
-        \fill[circ3] ([xshift=  5em]title.west) circle [radius=1ex];
-    },
-overlay first={
-        \shade[top color=wt1,bottom color=wt2](title.south west) [rounded corners=1mm] -- (title.north west) --
-        (title.north east) [sharp corners] -- (title.south east) -- cycle;
-        \fill[circ1] ([xshift=  2em]title.west) circle [radius=1ex];
-        \fill[circ2] ([xshift=3.5em]title.west) circle [radius=1ex];
-        \fill[circ3] ([xshift=  5em]title.west) circle [radius=1ex];
-    },
-frame code pre={\clip[rounded corners=1mm] (frame.south west) rectangle (frame.north east);},
-before title={\textcolor{icon}{\faHome}},
-halign title=flush center,
-fonttitle=\sffamily\zihao{-5},
+macboxwhitestyle,
 title={白色窗口},
-before upper={\setlength{\parindent}{2em}},
-coltitle = black,
-coltext = black,
-colback = wt3,#1
+#1
 }
 
 \ProvideTColorBox{macwindow2}{ !O{} }
 {
-enhanced,
-boxrule=0pt,
-rounded corners,
-frame code={
-        \clip[rounded corners=1mm] (frame.south west) rectangle (frame.north east);
-        \shade[top color=blk1,bottom color=blk2] (title.south west) rectangle (title.north east);
-        \fill[circ1] ([xshift=  2em]title.west) circle [radius=1ex];
-        \fill[circ2] ([xshift=3.5em]title.west) circle [radius=1ex];
-        \fill[circ3] ([xshift=  5em]title.west) circle [radius=1ex];
-    },
-before title={\textcolor{icon}{\faHome}},
-halign title=flush center,
-fonttitle=\sffamily\zihao{-5},
+macboxblackstyle,
 title={黑色窗口},
-before upper={\setlength{\parindent}{2em}},
-coltitle = white,
-coltext = white,
-colback = blk3,#1
+#1
 }
 
 \if@macbox@minted
     \ProvideTCBListing{maclisting1}{ !O{title={白色代码框}} }
     {
-    enhanced,
-    boxrule=0pt,
-    rounded corners,
-    frame code={
-            \clip[rounded corners=1mm] (frame.south west) rectangle (frame.north east);
-            \shade[top color=wt1,bottom color=wt2] (title.south west) rectangle (title.north east);
-            \fill[circ1] ([xshift=  2em]title.west) circle [radius=1ex];
-            \fill[circ2] ([xshift=3.5em]title.west) circle [radius=1ex];
-            \fill[circ3] ([xshift=  5em]title.west) circle [radius=1ex];
-        },
-    before title={\textcolor{icon}{\faHome}},
-    halign title=flush center,
-    fonttitle=\sffamily\zihao{-5},
+    macboxwhitestyle,
+    mintedstyle,
     title={白色代码框},
-    coltitle = black,
-    coltext = black,
-    colback = wt3,
-    listing only,
-    listing engine=minted,
-    minted language=latex,
-    minted options={fontsize=\small,breaklines,autogobble,linenos,numbersep=3mm},
     #1
     }
     \ProvideTCBListing{maclisting2}{ !O{title={黑色代码框}} }
     {
-    enhanced,
-    boxrule=0pt,
-    rounded corners,
-    frame code={
-            \clip[rounded corners=1mm] (frame.south west) rectangle (frame.north east);
-            \shade[top color=blk1,bottom color=blk2] (title.south west) rectangle (title.north east);
-            \fill[circ1] ([xshift=  2em]title.west) circle [radius=1ex];
-            \fill[circ2] ([xshift=3.5em]title.west) circle [radius=1ex];
-            \fill[circ3] ([xshift=  5em]title.west) circle [radius=1ex];
-        },
-    before title={\textcolor{icon}{\faHome}},
-    halign title=flush center,
-    fonttitle=\sffamily\zihao{-5},
+    macboxblackstyle,
+    mintedstyle,
     title={黑色代码框},
-    coltitle = white,
-    coltext = white,
-    colback = blk3,
-    listing only,
-    listing engine=minted,
-    minted language=latex,
-    minted options={fontsize=\small,breaklines,autogobble,linenos,numbersep=3mm},
     #1
     }
 \else
     \ProvideTCBListing{maclisting1}{ !O{title={白色代码框}} }
     {
-    enhanced,
-    boxrule=0pt,
-    rounded corners,
-    frame code={
-            \clip[rounded corners=1mm] (frame.south west) rectangle (frame.north east);
-            \shade[top color=wt1,bottom color=wt2] (title.south west) rectangle (title.north east);
-            \fill[circ1] ([xshift=  2em]title.west) circle [radius=1ex];
-            \fill[circ2] ([xshift=3.5em]title.west) circle [radius=1ex];
-            \fill[circ3] ([xshift=  5em]title.west) circle [radius=1ex];
-        },
-    before title={\textcolor{icon}{\faHome}},
-    halign title=flush center,
-    fonttitle=\sffamily\zihao{-5},
+    macboxwhitestyle,
+    listingstyle,
     title={白色代码框},
-    coltitle = black,
-    coltext = black,
-    colback = wt3,
-    listing only,
-    listing engine=listings,
-    listing options={style=tcblatex,language=TeX,},
     #1
     }
     \ProvideTCBListing{maclisting2}{ !O{title={黑色代码框}} }
     {
-    enhanced,
-    boxrule=0pt,
-    rounded corners,
-    frame code={
-            \clip[rounded corners=1mm] (frame.south west) rectangle (frame.north east);
-            \shade[top color=blk1,bottom color=blk2] (title.south west) rectangle (title.north east);
-            \fill[circ1] ([xshift=  2em]title.west) circle [radius=1ex];
-            \fill[circ2] ([xshift=3.5em]title.west) circle [radius=1ex];
-            \fill[circ3] ([xshift=  5em]title.west) circle [radius=1ex];
-        },
-    before title={\textcolor{icon}{\faHome}},
-    halign title=flush center,
-    fonttitle=\sffamily\zihao{-5},
+    macboxblackstyle,
+    listingstyle,
     title={黑色代码框},
-    coltitle = white,
-    coltext = white,
-    colback = blk3,
-    listing only,
-    listing engine=listings,
-    listing options={style=tcblatex,language=TeX,},
     #1
     }
 \fi
+
+
